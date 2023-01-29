@@ -9,7 +9,7 @@ volumes:
                 name: wordpress
                 driver: local
                 driver_opts:
-                        device: /home/buthor/data/wordpress
+                        device: /mnt/wordpress
                         o: bind
                         type: none
 
