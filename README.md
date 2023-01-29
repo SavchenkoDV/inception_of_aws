@@ -19,6 +19,10 @@
    6. Создаем mariaDB instant с ubuntu на AWS (EC2) в одной сети :
    Открываем порт 3306: Security Groups > Edit inbound rules > Add rule = Custom TPC && Subnet ID - IPv4 CIDR && Port range 3306
 
+Добовляем jenkins authorized_keys в GIT HUB
+Install git into jenkins instance 
+
+
 W1   172.31.35.51 
 W2   172.31.41.1
 MDB  172.31.34.176
