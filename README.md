@@ -20,8 +20,8 @@
    Открываем порт 3306: Security Groups > Edit inbound rules > Add rule = Custom TPC && Subnet ID - IPv4 CIDR && Port range 3306
 
 Добовляем jenkins authorized_keys в GIT HUB
-Install git into jenkins instance 
-
+Install git into jenkins instance
+nc -vz 172.31.34.176 3306
 
 W1   172.31.35.51 
 W2   172.31.41.1
