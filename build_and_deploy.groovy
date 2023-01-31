@@ -24,7 +24,7 @@ pipeline {
                         sshagent(credentials: ['websites']) {
                             sh """
                                 ssh ubuntu@${ip} '
-                                    mysql -u root -h 172.31.34.176 --password=cd3dw2c4ffdnjef -Bse "SHOW DATABASES"
+                                    mysql -u root -h 172.31.34.176 --password=${MDB_ROOT_PASSWORD} -Bse "SHOW DATABASES"
                                 '
                             """
                         }
