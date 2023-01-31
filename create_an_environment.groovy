@@ -8,8 +8,9 @@ pipeline {
         stage('CreateEnvironment') {
             steps {
                 script {
-
-                    def ipDB = DataBase.split(';');
+                    def a= [];
+                    Set<String> ipDP = DataBase.split(';');
+                    //def ipDB =
                     println ipDB[0]
                     println ipDB[1]
                     def ipWS = WebSite.split(';');
