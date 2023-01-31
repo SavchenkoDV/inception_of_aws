@@ -17,7 +17,7 @@ pipeline {
                     println ipWS[1]
                     println "--------------"
                     println ipWS.getClass()
-                    println ipWS.getClass()
+                    println ipDB.getClass()
 
                     def result;
                     result = ipDB + ipWS
