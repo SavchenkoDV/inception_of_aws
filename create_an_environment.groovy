@@ -20,7 +20,7 @@ pipeline {
                         sshagent(credentials: ['websites']) {
                             sh '''
                                 ssh-keyscan -H ${ip} >> ~/.ssh/known_hosts
-                                ssh ubuntu@${Server} '
+                                ssh ubuntu@${ip} '
                                     sudo apt update;
                                     sudo apt install apt-transport-https ca-certificates curl software-properties-common -y;
                                     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -;
@@ -37,7 +37,7 @@ pipeline {
                             sshagent(credentials: ['websites']) {
                                 sh '''
                                 ssh-keyscan -H ${ip} >> ~/.ssh/known_hosts
-                                ssh ubuntu@ip '
+                                ssh ubuntu@${ip} '
                                     sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
                                     sudo chmod +x /usr/local/bin/docker-compose;
                                     docker-compose --version;
