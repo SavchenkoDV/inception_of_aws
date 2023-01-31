@@ -16,8 +16,9 @@ pipeline {
                     println ipWS[0]
                     println ipWS[1]
 
-                    def TEST = ipDB + ipDB
+                    def TEST = ipDB << ipDB
                     int i = 0;
+                    println TEST.size()
                     while (i < TEST.size()) {
                         println TEST[i];
                         i++;
