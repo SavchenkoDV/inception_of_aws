@@ -17,7 +17,7 @@ pipeline {
                     println ipWS[1]
                     println "--------------"
 
-                    List<string> result = ipDB + ipWS
+                    def result = Stream.concat(ipDB.stream(), ipWS.stream())
                     int i = 0;
                     println result.size()
 
