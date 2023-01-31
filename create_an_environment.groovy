@@ -9,9 +9,9 @@ pipeline {
             steps {
                 script {
 
-                    String[] ipDB = DataBase.split(';');
+                    def ipDB = DataBase.split(';');
                     println ipDB
-                    String[] ipWS = WebSite.split(';');
+                    def ipWS = WebSite.split(';');
                     println ipWS
                 }
             }
