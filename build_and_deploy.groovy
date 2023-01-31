@@ -28,7 +28,7 @@ pipeline {
                                     sudo docker rm mariadb || true;
                                     sudo apt install mariadb-client-core-10.6 -y;
                                     sudo docker run  --name mariadb --restart always -p 3306:3306 -v /mnt/mariadb-data:/var/lib/mysql --env MARIADB_USER=dvs --env MARIADB_PASSWORD=${MDB_USER_PASSWORD} --env MARIADB_ROOT_PASSWORD=${MDB_ROOT_PASSWORD} -d mariadb:latest;
-                                    sleep 1;
+                                    sleep 20;
                                     export HN=\$(hostname -i)
                                     mysql -u root -h \$HN --password=${MDB_ROOT_PASSWORD} < CREATE_DB;
                                 '
