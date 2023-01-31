@@ -15,6 +15,13 @@ pipeline {
                     def ipWS = WebSite.split(';');
                     println ipWS[0]
                     println ipWS[1]
+
+                    def TEST = ipDB + ipDB
+                    int i = 0;
+                    while (i < TEST.size()) {
+                        println TEST[i];
+                        i++;
+                    }
                 }
             }
         }
