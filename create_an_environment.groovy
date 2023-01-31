@@ -10,9 +10,11 @@ pipeline {
                 script {
 
                     def ipDB = DataBase.split(';');
-                    println ipDB
+                    println ipDB[0]
+                    println ipDB[1]
                     def ipWS = WebSite.split(';');
-                    println ipWS
+                    println ipWS[0]
+                    println ipWS[1]
                 }
             }
         }
