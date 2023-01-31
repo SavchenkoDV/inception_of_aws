@@ -22,7 +22,9 @@ pipeline {
                         sshagent(credentials: ['websites']) {
                             sh """
                                 ssh ubuntu@${ip} '
-
+                                    sudo docker stop mariadb;
+                                    sudo docker rm mariadb;
+                                    sudo docker run  --name mariadb --restart always -p 3306:3306 -v /mnt/mariadb-data:/var/lib/mysql --env MARIADB_USER=dvs --env MARIADB_PASSWORD=${MDB_USER_PASSWORD} --env MARIADB_ROOT_PASSWORD=${MDB_ROOT_PASSWORD} -d mariadb:latest;
                                     export HN=\$(hostname -i)
                                     mysql -u root -h \$HN --password=${MDB_ROOT_PASSWORD} -Bse "SHOW DATABASES"
                                 '
