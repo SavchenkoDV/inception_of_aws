@@ -22,7 +22,7 @@ pipeline {
                         sshagent(credentials: ['websites']) {
                             sh """
                                 echo "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \'dvs\'@\'%\'; FLUSH PRIVILEGES;" > CREATE_DB;
-                                scp CREATE_DB ubuntu@${ip}:/
+                                scp CREATE_DB ubuntu@${ip}:./
                                 ssh ubuntu@${ip} '
                                     sudo docker stop mariadb || true;
                                     sudo docker rm mariadb || true;
