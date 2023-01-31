@@ -17,7 +17,7 @@ pipeline {
                     println ipWS[1]
                     println "--------------"
 
-                    def result = ipDB + ipWS
+                    List<string> result = ipDB + ipWS
                     int i = 0;
                     println result.size()
 
