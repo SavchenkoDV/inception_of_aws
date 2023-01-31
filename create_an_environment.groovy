@@ -35,15 +35,15 @@ pipeline {
                         if (ipWS.contains(ip)) {
                             //Install Docker-compose by ip address
                             sshagent(credentials: ['websites']) {
-                                sh '''
+                                sh """
                                     ssh-keyscan -H ${ip} >> ~/.ssh/known_hosts
                                     ssh ubuntu@${ip} '
-                                        sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
+                                        sudo curl -L 'https://github.com/docker/compose/releases/download/1.26.0/docker-compose-\$(uname -s)-\$(uname -m)' -o /usr/local/bin/docker-compose;
                                         sudo chmod +x /usr/local/bin/docker-compose;
                                         docker-compose --version;
                                         sudo apt install mysql-client-core-8.0
                                     '
-                                '''
+                                """
                             }
                         }
                     }
