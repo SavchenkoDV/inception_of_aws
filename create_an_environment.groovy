@@ -11,12 +11,11 @@ pipeline {
             steps {
                 script {
                     def ipDB = DataBase.split(';') as Set
-                    println ipDB.getClass()
-//                    println ipDB[0]
-//                    println ipDB[1]
-//                    def ipWS = WebSite.split(';');
-//                    println ipWS[0]
-//                    println ipWS[1]
+                    println ipDB[0]
+                    println ipDB[1]
+                    def ipWS = WebSite.split(';') as Set
+                    println ipWS[0]
+                    println ipWS[1]
 //                    println "--------------"
 //                    println ipWS.getClass()
 //                    println ipDB.getClass()
