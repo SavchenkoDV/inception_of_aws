@@ -12,8 +12,10 @@
    * Открываем порт 8080: Security Groups > Edit inbound rules > Add rule = Custom TPC && Port range 8080
 4. Настраиваем связь jenkins c websites :
    * Меняем права ключа *.pem - sudo chmod 600 *pem
-   * Отправляем на jenkins instance -  scp -i ./*.pem ./*.pem jenkins@52.47.126.105:/tmp/
-   * Меняем владельца ключа *.pem - sudo chown jenkins: ./*.pem
+   * Отправляем на jenkins instance -  scp -i ./*.pem ./*.pem user@ipaddres:/tmp/
+   * Меняем владельца ключа *.pem - sudo chown user: ./*.pem
+
+
 5. Создаем jenkins Pipeline подготавливающий окружающию среду для Deploy websites на удаленых instances:
 
    6. Создаем mariaDB instant с ubuntu на AWS (EC2) в одной сети :
