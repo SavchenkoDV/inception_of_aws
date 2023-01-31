@@ -6,7 +6,7 @@ pipeline {
     environment {
         MDB_ROOT_PASSWORD = credentials('mdb_root_pass')
         MDB_USER_PASSWORD = credentials('mdb_user_pass')
-        CREATE_DB_SCRIPT = "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO 'dvs'@'%'; FLUSH PRIVILEGES;"
+        CREATE_DB_SCRIPT = "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \'dvs\'@\'%\'; FLUSH PRIVILEGES;"
     }
     parameters {
         string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the WEBSITE(S). Example: 13.39.107.210;13.38.121.165")
