@@ -19,9 +19,6 @@ pipeline {
                         //Install Docker by ip address
                         sshagent(credentials: ['websites']) {
                             sh """
-                                echo ${id}    
-                            """
-                            sh '''
                                 ssh-keyscan -H ${ip} >> ~/.ssh/known_hosts
                                 ssh ubuntu@${ip} '
                                     sudo apt update;
@@ -33,7 +30,7 @@ pipeline {
                                     sudo apt install docker-ce -y;
                                     sudo systemctl status docker;
                                 '
-                            '''
+                            """
                         }
                         if (ipWS.contains(ip)) {
                             //Install Docker-compose by ip address
