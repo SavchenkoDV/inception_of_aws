@@ -16,9 +16,11 @@ pipeline {
                     println ipWS[0]
                     println ipWS[1]
                     println "--------------"
+                    println ipWS.getClass()
+                    println ipWS.getClass()
 
                     def result;
-                    result = result.concat(ipDB, ipWS)
+                    result = ipDB + ipWS
                     int i = 0;
                     println result.size()
 
