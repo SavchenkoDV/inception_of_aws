@@ -8,8 +8,11 @@ pipeline {
         stage('CreateEnvironment') {
             steps {
                 script {
-                    println DataBase.getClass()
-                    println WebSite.getClass()
+
+                    String[] ipDB = DataBase.split(';');
+                    println ipDB
+                    String[] ipWS = WebSite.split(';');
+                    println ipWS
                 }
             }
         }
