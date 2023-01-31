@@ -21,7 +21,7 @@ pipeline {
                     int i = 0;
                     println TEST.size()
 
-                    prinln "---------------"
+                    println "---------------"
                     while (i < TEST.size()) {
                         println TEST[i];
                         i++;
