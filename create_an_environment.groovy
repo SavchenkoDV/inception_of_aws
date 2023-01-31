@@ -19,7 +19,7 @@ pipeline {
 
                     def result = ipDB + ipWS
                     int i = 0;
-                    println TEST.size()
+                    println result.size()
 
                     println "---------------"
                     while (i < result.size()) {
