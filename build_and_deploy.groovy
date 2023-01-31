@@ -6,7 +6,6 @@ pipeline {
     environment {
         MDB_ROOT_PASSWORD = credentials('mdb_root_pass')
         MDB_USER_PASSWORD = credentials('mdb_user_pass')
-        CREATE_DB_SCRIPT = "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \'dvs\'@\'%\'; FLUSH PRIVILEGES;"
     }
     parameters {
         string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the WEBSITE(S). Example: 13.39.107.210;13.38.121.165")
@@ -22,15 +21,18 @@ pipeline {
                     for (ip in ipDB) {
                         sshagent(credentials: ['websites']) {
                             sh """
+                                echo "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \'dvs\'@\'%\'; FLUSH PRIVILEGES;" > CREATE_DB;
+                                scp CREATE_DB ubuntu@${ip}:/
                                 ssh ubuntu@${ip} '
                                     sudo docker stop mariadb || true;
                                     sudo docker rm mariadb || true;
                                     sudo apt install mariadb-client-core-10.6 -y;
                                     sudo docker run  --name mariadb --restart always -p 3306:3306 -v /mnt/mariadb-data:/var/lib/mysql --env MARIADB_USER=dvs --env MARIADB_PASSWORD=${MDB_USER_PASSWORD} --env MARIADB_ROOT_PASSWORD=${MDB_ROOT_PASSWORD} -d mariadb:latest;
-                                    sleep 20;
+                                    sleep 1;
                                     export HN=\$(hostname -i)
-                                    mysql -u root -h \$HN --password=${MDB_ROOT_PASSWORD} -Bse "${CREATE_DB_SCRIPT}";
+                                    mysql -u root -h \$HN --password=${MDB_ROOT_PASSWORD} < CREATE_DB;
                                 '
+                                
                             """
                         }
                     }
