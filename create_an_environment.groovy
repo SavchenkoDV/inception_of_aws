@@ -17,14 +17,13 @@ pipeline {
                     println ipWS[1]
                     println "--------------"
 
-                    def TEST = ipDB
-                    TEST.addAll(ipWS)
+                    def result = ipDB + ipWS
                     int i = 0;
                     println TEST.size()
 
                     println "---------------"
-                    while (i < TEST.size()) {
-                        println TEST[i];
+                    while (i < result.size()) {
+                        println result[i];
                         i++;
                     }
                 }
