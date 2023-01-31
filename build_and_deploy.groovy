@@ -28,7 +28,7 @@ pipeline {
                                     sudo docker run  --name mariadb --restart always -p 3306:3306 -v /mnt/mariadb-data:/var/lib/mysql --env MARIADB_USER=dvs --env MARIADB_PASSWORD=${MDB_USER_PASSWORD} --env MARIADB_ROOT_PASSWORD=${MDB_ROOT_PASSWORD} -d mariadb:latest;
                                     sleep 5;
                                     export HN=\$(hostname -i)
-                                    echo "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \"dvs\"@\"%\"; FLUSH PRIVILEGES;" > createBD
+                                    echo "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \\'dvs\\'@\\'%\\'; FLUSH PRIVILEGES;" > createBD
                                     mysql -u root -h \$HN --password=${MDB_ROOT_PASSWORD} -Bse \"CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \"dvs\"@\"%\"; FLUSH PRIVILEGES;\"
                                 '
                             """
