@@ -17,7 +17,8 @@ pipeline {
                     println ipWS[1]
                     println "--------------"
 
-                    def TEST = ipDB + ipWS
+                    def TEST = ipDB
+                    TEST.addAll(ipWS)
                     int i = 0;
                     println TEST.size()
 
