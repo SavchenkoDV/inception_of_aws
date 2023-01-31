@@ -11,25 +11,19 @@ pipeline {
             steps {
                 script {
                     def ipDB = DataBase.split(';') as Set
-                    println ipDB[0]
-                    println ipDB[1]
                     def ipWS = WebSite.split(';') as Set
-                    println ipWS[0]
-                    println ipWS[1]
-//                    println "--------------"
-//                    println ipWS.getClass()
-//                    println ipDB.getClass()
-//
-//                    def result;
-//                    result = ipDB + ipWS
-//                    int i = 0;
-//                    println result.size()
 
-//                    println "---------------"
-//                    while (i < result.size()) {
-//                        println result[i];
-//                        i++;
-//                    }
+                    def ipDocker = (ipDB + ipWS) as set
+
+                    println ipDocker.size()
+
+
+                    while (i < ipDocker.size()) {
+                        println result[i];
+                        i++;
+                    }
+
+
                 }
             }
         }
