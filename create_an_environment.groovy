@@ -8,8 +8,8 @@ pipeline {
         stage('CreateEnvironment') {
             steps {
                 script {
-                    println DataBase
-                    println WebSite
+                    println DataBase.getClass()
+                    println WebSite.getClass()
                 }
             }
         }
