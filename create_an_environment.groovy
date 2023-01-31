@@ -12,14 +12,14 @@ pipeline {
                 script {
                     def ipDB = DataBase.split(';') as Set
                     def ipWS = WebSite.split(';') as Set
-
                     def ipDocker = ipDB + ipWS
+                    if (ipDocker.size() < 0)
 
                     println ipDocker.size()
 
-
+                    int i = 0;
                     while (i < ipDocker.size()) {
-                        println result[i];
+                        println ipDocker[i];
                         i++;
                     }
 
