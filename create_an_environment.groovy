@@ -13,7 +13,7 @@ pipeline {
                     def ipDB = DataBase.split(';') as Set
                     def ipWS = WebSite.split(';') as Set
 
-                    def ipDocker = (ipDB + ipWS) as set
+                    def ipDocker = ipDB + ipWS
 
                     println ipDocker.size()
 
