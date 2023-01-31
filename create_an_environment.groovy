@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     def ipDB = DataBase.split(';') as Set
-                    println ipDB.GetClass()
+                    println ipDB.getClass()
 //                    println ipDB[0]
 //                    println ipDB[1]
 //                    def ipWS = WebSite.split(';');
