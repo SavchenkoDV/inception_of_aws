@@ -37,7 +37,7 @@ pipeline {
 //                                    sudo apt install mysql-client-core-8.0
 //                                '
 //                            '''
-                        def i = ipWS.containsAll(ip)
+                        def i = ipWS.contains(ip)
                         println i
 //                        if (ipWS.findAll(ip)) {
 //                            println ip
