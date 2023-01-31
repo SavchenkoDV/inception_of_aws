@@ -22,8 +22,8 @@ pipeline {
                         sshagent(credentials: ['websites']) {
                             sh """
                                 ssh ubuntu@${ip} '
-                                    sudo docker stop mariadb;
-                                    sudo docker rm mariadb;
+                                    sudo docker stop mariadb | true;
+                                    sudo docker rm mariadb | true;
                                     sudo docker run  --name mariadb --restart always -p 3306:3306 -v /mnt/mariadb-data:/var/lib/mysql --env MARIADB_USER=dvs --env MARIADB_PASSWORD=${MDB_USER_PASSWORD} --env MARIADB_ROOT_PASSWORD=${MDB_ROOT_PASSWORD} -d mariadb:latest;
                                     export HN=\$(hostname -i)
                                     mysql -u root -h \$HN --password=${MDB_ROOT_PASSWORD} -Bse "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO 'dvs'@'%'; FLUSH PRIVILEGES;"
@@ -64,5 +64,3 @@ pipeline {
         }
     }
 }
-//13.38.250.255
-//cd3dw2c4ffdnjef
