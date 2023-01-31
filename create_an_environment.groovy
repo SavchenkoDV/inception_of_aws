@@ -1,3 +1,5 @@
+import groovy.transform.builder.InitializerStrategy
+
 pipeline {
     agent any
     parameters {
@@ -8,28 +10,27 @@ pipeline {
         stage('CreateEnvironment') {
             steps {
                 script {
-                    def a= [];
-                    Set<String> ipDP = DataBase.split(';');
-                    //def ipDB =
-                    println ipDB[0]
-                    println ipDB[1]
-                    def ipWS = WebSite.split(';');
-                    println ipWS[0]
-                    println ipWS[1]
-                    println "--------------"
-                    println ipWS.getClass()
-                    println ipDB.getClass()
+                    def ipDB = DataBase.split(';') as Set
+                    println ipDB.GetClass()
+//                    println ipDB[0]
+//                    println ipDB[1]
+//                    def ipWS = WebSite.split(';');
+//                    println ipWS[0]
+//                    println ipWS[1]
+//                    println "--------------"
+//                    println ipWS.getClass()
+//                    println ipDB.getClass()
+//
+//                    def result;
+//                    result = ipDB + ipWS
+//                    int i = 0;
+//                    println result.size()
 
-                    def result;
-                    result = ipDB + ipWS
-                    int i = 0;
-                    println result.size()
-
-                    println "---------------"
-                    while (i < result.size()) {
-                        println result[i];
-                        i++;
-                    }
+//                    println "---------------"
+//                    while (i < result.size()) {
+//                        println result[i];
+//                        i++;
+//                    }
                 }
             }
         }
