@@ -17,7 +17,8 @@ pipeline {
                     println ipWS[1]
                     println "--------------"
 
-                    def result = Stream.concat(ipDB.stream(), ipWS.stream())
+                    def result;
+                    result = result.concat(ipDB, ipWS)
                     int i = 0;
                     println result.size()
 
