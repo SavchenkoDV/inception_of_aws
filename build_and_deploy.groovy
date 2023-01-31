@@ -9,7 +9,7 @@ pipeline {
     }
     parameters {
         string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the WEBSITE(S). Example: 13.39.107.210;13.38.121.165")
-        string( name: 'DataBase', defaultValue: '52.47.138.101', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the DATA BASE(s). Example: 13.38.250.255")
+        string( name: 'DataBase', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the DATA BASE(s). Example: 13.38.250.255")
     }
     stages {
         stage('Build and Deploy') {
@@ -26,10 +26,9 @@ pipeline {
                                     sudo docker rm mariadb || true;
                                     sudo apt install mariadb-client-core-10.6 -y;
                                     sudo docker run  --name mariadb --restart always -p 3306:3306 -v /mnt/mariadb-data:/var/lib/mysql --env MARIADB_USER=dvs --env MARIADB_PASSWORD=${MDB_USER_PASSWORD} --env MARIADB_ROOT_PASSWORD=${MDB_ROOT_PASSWORD} -d mariadb:latest;
-                                    sleep 5;
+                                    sleep 20;
                                     export HN=\$(hostname -i)
-                                    echo "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \'dvs\\'@\\'%'; FLUSH PRIVILEGES;" > createBD
-                                    mysql -u root -h \$HN --password=${MDB_ROOT_PASSWORD} -Bse \"CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \"dvs\"@\"%\"; FLUSH PRIVILEGES;\"
+                                    mysql -u root -h \$HN --password=${MDB_ROOT_PASSWORD} -Bse "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \\'dvs\\'@\\'%\\'; FLUSH PRIVILEGES;"
                                 '''
                             """
                         }
