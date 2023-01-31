@@ -32,7 +32,21 @@ pipeline {
                         }
                     }
 
-
+                    for (ip in ipWS) {
+                        sshagent(credentials: ['websites']) {
+                            sh """
+                                ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+                                rm -Rf wpsite
+                                git clone git@github.com:SavchenkoDV/wpsite.git
+                                scp -r ./wpsite ubuntu@${ip}:./
+                                ssh ubuntu@${ip} '
+                                    sudo mkdir /mnt/wordpress;
+                                    sudo docker-compose -f ./wpsite/srcs/docker-compose.yml down;
+                                    sudo docker-compose -f ./wpsite/srcs/docker-compose.yml up -d;
+                                '
+                            """
+                        }
+                    }
                 }
             }
         }
