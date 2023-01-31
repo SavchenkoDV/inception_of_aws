@@ -18,9 +18,9 @@ pipeline {
                     for (ip in ipDocker) {
                         //Install Docker by ip address
                         sshagent(credentials: ['websites']) {
-                            sh '''
+                            sh """
                                 echo ${id}    
-                            '''
+                            """
                             sh '''
                                 ssh-keyscan -H ${ip} >> ~/.ssh/known_hosts
                                 ssh ubuntu@${ip} '
