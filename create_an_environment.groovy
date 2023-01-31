@@ -15,7 +15,8 @@ pipeline {
                     def ipDocker = ipDB + ipWS
 
                     for (ip in ipDocker) {
-                        println ip
+                        println ip.getClass()
+                        println ipWS.getClass()
                         println "DOCKER"
 //                        sshagent(credentials: ['websites']) {
 //                            sh '''
@@ -36,12 +37,12 @@ pipeline {
 //                                    sudo apt install mysql-client-core-8.0
 //                                '
 //                            '''
-                        if (ipWS.findAll(ip))
-                            println ip
-                            println "DOCKER COMPOSE"
-                        }
+//                        if (ipWS.findAll(ip)) {
+//                            println ip
+//                            println "DOCKER COMPOSE"
+//                        }
 
-
+                    }
                 }
             }
         }
