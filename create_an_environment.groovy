@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        disableConcurrentBuilds()
+    }
     parameters {
         string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by a comma, the ip address(es) of the host(s) on which you want to prepare the environment for WEBSITE(s). Example: 13.39.107.210;13.38.121.165")
         string( name: 'DataBase', defaultValue: 'None', description: "Enter, separated by a comma, the ip address(es) of the host(s) on which you want to prepare the environment for DATA BASE(s). Example: 13.38.250.255")
@@ -16,7 +19,7 @@ pipeline {
                         //Install Docker by ip address
                         sshagent(credentials: ['websites']) {
                             sh '''
-                                ssh-keyscan -H ${Server} >> ~/.ssh/known_hosts
+                                ssh-keyscan -H ip >> ~/.ssh/known_hosts
                                 ssh ubuntu@${Server} '
                                     sudo apt update;
                                     sudo apt install apt-transport-https ca-certificates curl software-properties-common -y;
@@ -33,7 +36,7 @@ pipeline {
                             //Install Docker-compose by ip address
                             sshagent(credentials: ['websites']) {
                                 sh '''
-                                ssh-keyscan -H ${Server} >> ~/.ssh/known_hosts
+                                ssh-keyscan -H ip >> ~/.ssh/known_hosts
                                 ssh ubuntu@ip '
                                     sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
                                     sudo chmod +x /usr/local/bin/docker-compose;
@@ -45,6 +48,18 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+    }
+    post {
+        success {
+            script {
+                emailext body: "Success!", subject: "createEnvironment(s)", to: "admin@admin.ru"
+            }
+        }
+        failure {
+            script {
+                emailext body: "Failure!", subject: "createEnvironment(s)", to: "admin@admin.ru"
             }
         }
     }
