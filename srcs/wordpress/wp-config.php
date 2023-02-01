@@ -30,7 +30,6 @@ define( 'DB_PASSWORD', 'password' );
 
 /** MySQL hostname */
 
-
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
 
