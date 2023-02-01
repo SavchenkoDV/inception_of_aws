@@ -19,6 +19,9 @@ pipeline {
                     def ipDB = DataBase.split(';') as Set
                     def ipWS = WebSite.split(';') as Set
 
+                    if (ipDB[0] == "None")  { ipDB = [] }
+                    if (ipWS[0] == "None")  { ipWS = [] }
+
                     if (Config == "None" && ipWS.size() > 0) {
                         error('When building and deploying the application, you must create a database connection. Enter the PRIVATE IP address.')
                     } else {
