@@ -13,6 +13,10 @@ pipeline {
                 script {
                     def ipDB = DataBase.split(';') as Set
                     def ipWS = WebSite.split(';') as Set
+
+                    if (ipDB[0] == "None")  { ipDB = [] }
+                    if (ipWS[0] == "None")  { ipWS = [] }
+
                     def ipDocker = ipDB + ipWS
 
                     for (ip in ipDocker) {
