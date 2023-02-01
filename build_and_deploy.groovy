@@ -9,7 +9,7 @@ pipeline {
     }
     parameters {
         string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the WEBSITE(S). Example: 13.39.107.210;13.38.121.165")
-        string( name: 'DataBase', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the DATA BASE(s). Example: 13.38.250.255")
+        string( name: 'DataBase', defaultValue: 'None', description: "Enter, separated by commas, the PRIVATE IP address(es) of the host(s) where you want to build and deploy the DATABASE(s). Or the PRIVATE IP address of the DATABASE to which you want to connect the applications you entered above. Example: 13.38.250.255")
     }
     stages {
         stage('Build and Deploy') {
@@ -17,6 +17,12 @@ pipeline {
                 script {
                     def ipDB = DataBase.split(';') as Set
                     def ipWS = WebSite.split(';') as Set
+
+                    if (ipDB.size() > 1 && ipWS.size() > 0 && ipWS[0] != "None") {
+                        error('When creating and deploying an application with a database at the same time, the number of databases can be only one.')
+                    } else {
+                        def IP_DB="define( 'DB_HOST', '${ipDB[0]}' );"
+                    }
 
                     for (ip in ipDB) {
                         sshagent(credentials: ['websites']) {
@@ -36,13 +42,14 @@ pipeline {
                             """
                         }
                     }
-
+//TODO Приватный IP надо прокинуть в wordpress.conf
                     for (ip in ipWS) {
                         sshagent(credentials: ['websites']) {
                             sh """
                                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
                                 rm -Rf wpsite
                                 git clone git@github.com:SavchenkoDV/wpsite.git
+                                sed "2i\\${IP_DB}" wpsite/srcs/wordpress/test
                                 scp -r ./wpsite ubuntu@${ip}:./
                                 ssh ubuntu@${ip} '
                                     sudo mkdir /mnt/wordpress;
