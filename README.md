@@ -27,6 +27,14 @@ Jenkins pipeline
 1. create_an_environment.groovy - pipeline подготавливающий окружающию среду для Deploy APP
 2. build_and_deploy.groovy - pipeline собирающий и разворачивающий Mariadb, Nginx, Wordpress, myPhpAdmin
 3. deploy_static_site.groovy - pipeline разварачивающий статический сайт на сервера
+4. backup_database.groovy - pipeline создающий backup database и сохраняющие его на S3 
+
+Примечание:
+Необходимо добавить Pipeline, который будет проверять состояние instances :
+   * В случае отказа одного из websites instances : уведомляет админа, разворачивает копию, подключает к базе данных.
+   * В случае отказа базы данных : уведомляет админа, разворачиваеться DB с backup'ом, почередное подключение instances website к поднятной базе.
+
+
 
 
 https://15.237.82.15/wp-login.php
