@@ -1,7 +1,5 @@
 # INCEPTION IN AWS
 
-![INCEPTION TO AWS](https://user-images.githubusercontent.com/78852244/216099558-8793c65b-eef3-44e4-aed0-e892eec07c50.jpg)
-
 AWS
 1. Создаем jenkins instant с ubuntu на AWS (EC2) :
    * Выбираем созданный ранее ключ *.pem
@@ -28,7 +26,8 @@ AWS
 Jenkins pipeline
 1. create_an_environment.groovy - pipeline подготавливающий окружающию среду для Deploy APP
 2. build_and_deploy.groovy - pipeline собирающий и разворачивающий Mariadb, Nginx, Wordpress, myPhpAdmin
+3. deploy_static_site.groovy - pipeline разварачивающий статический сайт на сервера
 
 
-
-
+https://15.237.82.15/wp-login.php
+https://13.38.0.23/wp-login.php
