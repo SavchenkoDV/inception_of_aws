@@ -53,7 +53,7 @@ pipeline {
                                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
                                 rm -Rf wpsite
                                 git clone git@github.com:SavchenkoDV/wpsite.git
-                                sed "1i\123456 " wpsite/srcs/wordpress/test
+                                sed "32i\\${Config}" wp-config.php
                                 scp -r ./wpsite ubuntu@${ip}:./
                                 ssh ubuntu@${ip} '
                                     sudo mkdir /mnt/wordpress;
@@ -80,4 +80,6 @@ pipeline {
         }
     }
 }
+
+//sed "32i\\${Config}" wpsite/srcs/wordpress/wp-config.php
 
