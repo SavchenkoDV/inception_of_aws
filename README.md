@@ -1,6 +1,7 @@
 # INCEPTION IN AWS
 
-![INCEPTION TO AWS](https://user-images.githubusercontent.com/78852244/216103730-9082bbcb-9ac4-4202-b25d-b9d11b57a36c.jpg)
+![INCEPTION TO AWS](https://user-images.githubusercontent.com/78852244/216152568-0bd33ef1-7f8d-4b8a-99f4-f0e86cb24c03.jpg)
+
 
 AWS
 1. Создаем jenkins instant с ubuntu на AWS (EC2) :
