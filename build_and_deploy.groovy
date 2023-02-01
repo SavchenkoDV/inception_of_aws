@@ -9,7 +9,7 @@ pipeline {
     }
     parameters {
         string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the WEBSITE(S). Example: 13.39.107.210;15.237.107.47")
-        string( name: 'DataBase', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the DATABASE(s). Or the PRIVATE IP address of the DATABASE to which you want to connect the applications you entered above. Example: 52.47.138.101")
+        string( name: 'DataBase', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the DATABASE(s). Example: 52.47.138.101")
         string( name: 'Config', defaultValue: 'None', description: "Enter the PRIVATE IP address of the DATABASE you want to connect your WEBSITE(S) to. Example: 172.31.150.184")
     }
     stages {
