@@ -51,6 +51,7 @@ pipeline {
                         sshagent(credentials: ['websites']) {
                             sh """
                                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+                                ssh-keyscan -H ${ip} >> ~/.ssh/known_hosts                    
                                 rm -Rf wpsite
                                 git clone git@github.com:SavchenkoDV/wpsite.git
                                 sed -i "32i\\${Config}" wpsite/srcs/wordpress/wp-config.php
