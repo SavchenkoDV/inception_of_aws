@@ -51,9 +51,9 @@ pipeline {
                         sshagent(credentials: ['websites']) {
                             sh """
                                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-                                sudo rm -Rf wpsite
+                                rm -Rf wpsite
                                 git clone git@github.com:SavchenkoDV/wpsite.git
-                                sudo sed "1i\\123456 " wpsite/srcs/wordpress/test
+                                sed "1i\123456 " wpsite/srcs/wordpress/test
                                 scp -r ./wpsite ubuntu@${ip}:./
                                 ssh ubuntu@${ip} '
                                     sudo mkdir /mnt/wordpress;
