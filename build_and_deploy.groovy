@@ -6,6 +6,8 @@ pipeline {
     environment {
         MDB_ROOT_PASSWORD = credentials('mdb_root_pass')
         MDB_USER_PASSWORD = credentials('mdb_user_pass')
+        S3_ACCESS_KEY = credentials('s3_access_key')
+        S3_SECRET_KEY = credentials('s3_secret_key')
     }
     parameters {
         string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the WEBSITE(S). Example: 13.39.107.210;15.237.107.47")
@@ -31,8 +33,16 @@ pipeline {
                     for (ip in ipDB) {
                         sshagent(credentials: ['websites']) {
                             sh """
+                                ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+                                git clone git@github.com:SavchenkoDV/wpsite.git
+                            
                                 echo "CREATE DATABASE DVSGroupDB; GRANT ALL PRIVILEGES ON DVSGroupDB.* TO \'dvs\'@\'%\'; FLUSH PRIVILEGES;" > CREATE_DB;
+                                sed -i "2i\\${S3_ACCESS_KEY}" .s3cfg
+                                sed -i "65i\\${S3_ACCESS_KEY}" .s3cfg
+                            
+                                scp -r ./wpsite/.s3cfg ubuntu@${ip}:/home/ubuntu/.s3cfg
                                 scp CREATE_DB ubuntu@${ip}:./
+
                                 ssh ubuntu@${ip} '
                                     sudo docker stop mariadb || true;
                                     sudo docker rm mariadb || true;
@@ -50,11 +60,9 @@ pipeline {
                     for (ip in ipWS) {
                         sshagent(credentials: ['websites']) {
                             sh """
-                                ssh-keyscan -H github.com >> ~/.ssh/known_hosts                   
-                                rm -Rf wpsite
-                                git clone git@github.com:SavchenkoDV/wpsite.git
                                 sed -i "32i\\${Config}" wpsite/srcs/wordpress/wp-config.php
                                 scp -r ./wpsite ubuntu@${ip}:./
+
                                 ssh ubuntu@${ip} '
                                     sudo mkdir /mnt/wordpress;
                                     sudo docker-compose -f ./wpsite/srcs/docker-compose.yml down;

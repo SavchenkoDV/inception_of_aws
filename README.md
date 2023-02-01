@@ -18,8 +18,14 @@ AWS
    * Создаем подсеть VPC ***.**.0.0/16 SUBNET IPv4 > CIDRs ***.**.150.0/24
    * Открываем порты 443
 4. Создаем mariaDB instant с ubuntu на AWS (EC2) в одной сети :
-   * Открываем порт 3306 для подсети: Security Groups > Edit inbound rules > Add rule = Subnet ID - IPv4 CIDR 
-5. Настраиваем связь jenkins c instances и GIT :
+   * Открываем порт 3306 для подсети: Security Groups > Edit inbound rules > Add rule = Subnet ID - IPv4 CIDR
+5. Создаем AWS S3 BUCKET.
+6. Создаем IAM:
+   * Создаем User
+   * Создаем Access key and Secret access key
+   * Создаем Policies > Create > JSON : { "Version": "2012-10-17", "Statement": [ { "Effect": "Allow", "Action": [ "s3:GetBucketLocation", "s3:ListAllMyBuckets"], "Resource": "arn:aws:s3:::*" }, { "Effect": "Allow", "Action": "s3:*", "Resource": [ "arn:aws:s3:::BUCKETNAME", "arn:aws:s3:::BUCKETNAME/*" ] } ] }
+   * Создаем User groups
+7. Настраиваем связь jenkins c instances и GIT :
    * Меняем права ключа *.pem - sudo chmod 600 *pem
    * Отправляем на jenkins instance -  scp -i ./*.pem ./*.pem user@ipaddres:/tmp/
    * Меняем владельца ключа *.pem - sudo chown user: ./*.pem
@@ -28,11 +34,10 @@ AWS
 Jenkins pipeline
 1. create_an_environment.groovy - pipeline подготавливающий окружающию среду для Deploy APP
 2. build_and_deploy.groovy - pipeline собирающий и разворачивающий Mariadb, Nginx, Wordpress, myPhpAdmin
-3. deploy_static_site.groovy - pipeline разварачивающий статический сайт на сервера
-4. backup_database.groovy - pipeline создающий backup database и сохраняющие его на S3 
+3. backup_database.groovy - pipeline создающий backup database и сохраняющие его на S3
+
 
 Примечание:
-Необходимо добавить Pipeline, который будет проверять состояние instances :
+Необходимо добавить Pipeline, который будет проверять состояние instances и APP :
    * В случае отказа одного из websites instances : уведомляет админа, разворачивает копию, подключает к базе данных.
    * В случае отказа базы данных : уведомляет админа, разворачиваеться DB с backup'ом, почередное подключение instances website к поднятной базе.
-
