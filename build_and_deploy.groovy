@@ -8,8 +8,9 @@ pipeline {
         MDB_USER_PASSWORD = credentials('mdb_user_pass')
     }
     parameters {
-        string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the WEBSITE(S). Example: 13.39.107.210;13.38.121.165")
-        string( name: 'DataBase', defaultValue: 'None', description: "Enter, separated by commas, the PRIVATE IP address(es) of the host(s) where you want to build and deploy the DATABASE(s). Or the PRIVATE IP address of the DATABASE to which you want to connect the applications you entered above. Example: 13.38.250.255")
+        string( name: 'WebSite', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the WEBSITE(S). Example: 13.39.107.210;15.237.107.47")
+        string( name: 'DataBase', defaultValue: 'None', description: "Enter, separated by commas, the IP address(es) of the host(s) where you want to build and deploy the DATABASE(s). Or the PRIVATE IP address of the DATABASE to which you want to connect the applications you entered above. Example: 52.47.138.101")
+        string( name: 'Config', defaultValue: 'None', description: "Enter the PRIVATE IP address of the DATABASE you want to connect your WEBSITE(S) to. Example: 172.31.150.184")
     }
     stages {
         stage('Build and Deploy') {
@@ -18,10 +19,10 @@ pipeline {
                     def ipDB = DataBase.split(';') as Set
                     def ipWS = WebSite.split(';') as Set
 
-                    if (ipDB.size() > 1 && ipWS.size() > 0 && ipWS[0] != "None") {
-                        error('When creating and deploying an application with a database at the same time, the number of databases can be only one.')
+                    if (Config == "None" && ipWS.size() > 0) {
+                        error('When building and deploying the application, you must create a database connection. Enter the PRIVATE IP address.')
                     } else {
-                        def IP_DB="define( 'DB_HOST', '${ipDB[0]}' );"
+                        Config = "define( 'DB_HOST', '${Config}' );"
                     }
 
                     for (ip in ipDB) {
@@ -42,14 +43,14 @@ pipeline {
                             """
                         }
                     }
-//TODO Приватный IP надо прокинуть в wordpress.conf
+
                     for (ip in ipWS) {
                         sshagent(credentials: ['websites']) {
                             sh """
                                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
                                 rm -Rf wpsite
                                 git clone git@github.com:SavchenkoDV/wpsite.git
-                                sed "2i\\${IP_DB}" wpsite/srcs/wordpress/test
+                                sed "2i\\${Config}" wpsite/srcs/wordpress/test
                                 scp -r ./wpsite ubuntu@${ip}:./
                                 ssh ubuntu@${ip} '
                                     sudo mkdir /mnt/wordpress;
