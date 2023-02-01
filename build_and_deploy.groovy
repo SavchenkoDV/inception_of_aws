@@ -54,6 +54,7 @@ pipeline {
                                 rm -Rf wpsite
                                 git clone git@github.com:SavchenkoDV/wpsite.git
                                 sed "32i\\${Config}" wp-config.php
+                                sed "1i\\TEST" wp-config.php
                                 scp -r ./wpsite ubuntu@${ip}:./
                                 ssh ubuntu@${ip} '
                                     sudo mkdir /mnt/wordpress;
