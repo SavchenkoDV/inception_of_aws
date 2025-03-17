@@ -126,7 +126,5 @@
 2. **Monitor database health:**
    - Add steps to monitor the database's health, check backups, and restore as necessary.
 
----
 
-Feel free to fork this repository or follow the instructions to set up your own Jenkins CI/CD pipeline on AWS.
 
