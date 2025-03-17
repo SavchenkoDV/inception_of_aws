@@ -43,11 +43,11 @@
 
 ---
 
-## 3. Create MySQL Instance on AWS EC2
+## 3. Create MariaDB Instance on AWS EC2
 
-1. **Launch an EC2 instance for MySQL:**
+1. **Launch an EC2 instance for MariaDB:**
    - Select the same SSH key pair (*.pem) used in previous instances.
-   - Open port `3306` for MySQL connections in the Security Group.
+   - Open port `3306` for MariaDB connections in the Security Group.
 
 ---
 
